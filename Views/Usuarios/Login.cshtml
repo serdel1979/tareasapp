@@ -4,6 +4,15 @@
     ViewData["Title"] = "Login";
 }
 <h1>Ingresar</h1>
+
+@if (ViewData.Keys.Contains("mensaje"))
+{
+    <p style="color: red;">
+        @ViewData["mensaje"]
+    </p>
+}
+
+
 <div class="card">
 
     <div class="card-body">
@@ -18,7 +27,7 @@
 
             <div class="mb-3">
                 <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input type="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
@@ -29,6 +38,9 @@
 
             <button class="btn btn-primary" asp-action="Login">Login</button>
             <a class="btn btn-success" asp-action="Registrar">Registrar</a>
+
+            <a class="btn btn-success" asp-action="LoginExterno" asp-route-proveedor="Google"
+            >Continuar con Google</a>
         </form>
     </div>
 
