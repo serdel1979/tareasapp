@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TareasAsp.Models;
 
@@ -12,12 +13,15 @@ namespace TareasAsp.Controllers
     public class UsuariosController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ApplicationDbContext context;
 
         public UsuariosController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> SigninManager)
+            SignInManager<IdentityUser> SigninManager,
+            ApplicationDbContext context)
         {
             this.userManager = userManager;
             this.SigninManager = SigninManager;
+            this.context = context;
         }
 
         public SignInManager<IdentityUser> SigninManager { get; }
@@ -202,6 +206,19 @@ namespace TareasAsp.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Listado(string mensaje = null)
+        {
+            var usuarios = await context.Users.Select(u => new UsuarioViewModel
+            {
+                Email = u.Email
+            }).ToListAsync();
 
+            var modelo = new UsuarioListadoViewModel();
+            modelo.Usuarios = usuarios;
+            modelo.Mensaje = mensaje;
+
+            return View(modelo);
+        }
     }
 }
