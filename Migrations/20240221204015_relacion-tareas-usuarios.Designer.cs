@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TareasAsp;
@@ -11,9 +12,11 @@ using TareasAsp;
 namespace TareasAsp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240221204015_relacion-tareas-usuarios")]
+    partial class relaciontareasusuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,12 +297,15 @@ namespace TareasAsp.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<string>("UsuarioCeacionId")
+                        .HasColumnType("text");
+
                     b.Property<string>("UsuarioCreacionId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioCreacionId");
+                    b.HasIndex("UsuarioCeacionId");
 
                     b.ToTable("Tareas");
                 });
@@ -379,11 +385,11 @@ namespace TareasAsp.Migrations
 
             modelBuilder.Entity("TareasAsp.Models.Entidades.Tarea", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioCreacion")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioCeacion")
                         .WithMany()
-                        .HasForeignKey("UsuarioCreacionId");
+                        .HasForeignKey("UsuarioCeacionId");
 
-                    b.Navigation("UsuarioCreacion");
+                    b.Navigation("UsuarioCeacion");
                 });
 
             modelBuilder.Entity("TareasAsp.Models.Entidades.Tarea", b =>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace TareasAsp.Models.Entidades
 {
@@ -13,5 +14,7 @@ namespace TareasAsp.Models.Entidades
         public string Descripcion  { get; set;}
         public int Orden { get; set; }
         public DateTime FechaCreacion { get; set; }
+        public string UsuarioCreacionId { get; set; }
+        public IdentityUser UsuarioCreacion { get; set; }
     } 
 }

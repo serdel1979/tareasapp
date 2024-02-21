@@ -1,4 +1,5 @@
-﻿@model UsuarioListadoViewModel
+﻿@using TareasAsp.Servicios
+@model UsuarioListadoViewModel
 
 @{
     ViewData["Title"] = "Listado de usuarios";
@@ -7,42 +8,54 @@
 
 @if (Model.Mensaje is not null)
 {
-    <div class="alert alert-success" role="alert">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         @Model.Mensaje
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 
-@if (Model.Mensaje is not null)
+@if (Model.Usuarios is not null)
 {
-    <form method="post">
-        <table>
-            <thead>
-                <tr>
-                    <td>Acción</td>
-                    <td>Email</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var usuario in Model.Usuarios)
-                {
-                    <tr>
-                        <td>
-                            <button 
-                                class="btn btn-primary me-2"
-                                asp-action="HacerAdmin" asp-route-email="@usuario.Email">Hacer Admin</button>
-                            <button class="btn btn-secundary me-2"
-                                    asp-action="RemoverAdmin" asp-route-email="@usuario.Email">
-                                Remover Admin
-                            </button>
-                        </td>
-                        <td>
-                            @usuario.Email
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>
+
+    
+<div class="card">
+        <div class="card-header">
+            Listado de usuarios
+        </div>
+        
+        <div class="card-body" style="overflow-x: auto;">
+            <form method="post">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Acción</td>
+                            <td>Email</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var usuario in Model.Usuarios)
+                        {
+                            <tr>
+                                <td>
+                                    <button 
+                                        class="btn btn-primary me-2"
+                                        asp-action="HacerAdmin" asp-route-email="@usuario.Email">Hacer Admin</button>
+                                    <button class="btn btn-secundary me-2"
+                                            asp-action="RemoverAdmin" asp-route-email="@usuario.Email">
+                                        Remover Admin
+                                    </button>
+                                </td>
+                                <td>
+                                    @usuario.Email
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+   </div>
+ </div>
 }
 else
 {
