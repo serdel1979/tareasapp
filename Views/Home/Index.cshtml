@@ -1,12 +1,43 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Listado de tareas";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Mis tareas</h1>
 </div>
 
-<div>
-    <h3>@ViewBag.Saludo</h3>
+<div id="contenedor-listado-tareas" class="text-center">
+
+    <div class="text-start" data-bind="foreach: tareas">
+        <div name="tareas" class="border mb-2 p-2" style="cursor: pointer">
+            <div data-bind="text: titulo" class="fw-bold">
+
+            </div>
+        </div>
+    </div>
+
+    <div data-bind="visible:cargando" class="spinner-border">
+        <div class="visually-hidden">
+            Cargando...
+        </div>
+    </div>
+
 </div>
+
+@section Scripts{
+    <script>
+        const tareasListViewModel = {
+            tareas: ko.observableArray([
+
+            ]),
+            cargando: ko.observable(true)
+        }
+
+        setTimeout(() => {
+            tareasListViewModel.tareas.push({titulo: 'tarea 1'})
+            tareasListViewModel.cargando(false);
+        },2000)
+
+        ko.applyBindings(tareasListViewModel, document.getElementById('contenedor-listado-tareas'));
+    </script>
+}

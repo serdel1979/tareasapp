@@ -56,19 +56,11 @@ builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.Ap
 
 
 
-builder.Services.AddLocalization();
 
 var app = builder.Build();
 
 var culturasUIsoposrtadas = new[] { "es","en"};
 
-app.UseRequestLocalization(opciones =>
-{
-    opciones.DefaultRequestCulture = new RequestCulture("es");
-    opciones.SupportedUICultures = culturasUIsoposrtadas
-    .Select(cultura => new CultureInfo(cultura)).ToList();
-
-});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
